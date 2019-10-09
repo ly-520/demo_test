@@ -26,14 +26,6 @@ public class ManageController {
     @Autowired
     private EmployeeService employeeService;
 
-/*    @CrossOrigin
-    @RequestMapping("api/index")
-    public JsonResult EmployeeInfo(){
-        JsonResult jsonResult=new JsonResult();
-        List<Employee> employeeList = employeeService.queryAllEmployee();
-        return jsonResult.success(employeeList);
-    }*/
-
     @CrossOrigin
     @RequestMapping("api/index")
     public ResponseEntity getAllEmployeeInfo(){
@@ -45,7 +37,6 @@ public class ManageController {
     @CrossOrigin
     @RequestMapping("api/addEmployee")
     public ResponseEntity AddEmployeeInfo(@RequestBody Employee employee){
-        System.out.println(employee.toString());
         if (employee == null){
             return ResponseEntity.badRequest().build();
         }
@@ -59,7 +50,6 @@ public class ManageController {
     @CrossOrigin
     @RequestMapping("api/employee")
     public ResponseEntity getEmployeeInfoById(Integer id){
-        System.out.println("id："+id);
         if(id == null){
             return ResponseEntity.badRequest().build();
         }
@@ -70,7 +60,6 @@ public class ManageController {
     @CrossOrigin
     @RequestMapping("api/deleteEmployee")
     public ResponseEntity deleteEmployee(Integer id){
-        System.out.println("id："+id);
         if(id == null){
             return ResponseEntity.badRequest().build();
         }
@@ -85,7 +74,6 @@ public class ManageController {
     @CrossOrigin
     @RequestMapping("api/editEmployee")
     public ResponseEntity editEmployee(@RequestBody Employee employee){
-        System.out.println(employee.toString());
         if(employee == null){
             return ResponseEntity.badRequest().build();
         }

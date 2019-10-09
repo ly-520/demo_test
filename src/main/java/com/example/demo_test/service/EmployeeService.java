@@ -18,4 +18,13 @@ import java.util.List;
 public interface EmployeeService {
 
     List<Employee> queryAllEmployee();
+
+
+    boolean insertEmployee(Employee employee);
+
+    Employee queryEmployeeInfoById(Integer id);
+
+    boolean deleteEmployeeById(Integer id);
+
+    boolean updateEmployeeById(Employee employee);
 }

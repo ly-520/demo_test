@@ -29,4 +29,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> queryAllEmployee() {
         return employeeDao.selectAllEmployee();
     }
+
+    @Override
+    public boolean insertEmployee(Employee employee) {
+        return employeeDao.insertEmployee(employee) > 0;
+    }
+
+    @Override
+    public Employee queryEmployeeInfoById(Integer id) {
+        return employeeDao.selectEmployeeById(id);
+    }
+
+    @Override
+    public boolean deleteEmployeeById(Integer id) {
+        return employeeDao.deleteEmployeeById(id) > 0;
+    }
+
+    @Override
+    public boolean updateEmployeeById(Employee employee) {
+        return employeeDao.updateEmployee(employee) > 0;
+    }
 }

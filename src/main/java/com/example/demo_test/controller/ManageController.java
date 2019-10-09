@@ -6,14 +6,12 @@ package com.example.demo_test.controller;/**
  * @date 2019/10/8 17:22
  */
 
-import com.example.demo_test.common.JsonResult;
 import com.example.demo_test.pojo.Employee;
 import com.example.demo_test.service.EmployeeService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,12 +36,63 @@ public class ManageController {
 
     @CrossOrigin
     @RequestMapping("api/index")
-    public ResponseEntity EmployeeInfo(){
-        JsonResult jsonResult=new JsonResult();
+    public ResponseEntity getAllEmployeeInfo(){
         List<Employee> employeeList = employeeService.queryAllEmployee();
-        /*  //https://blog.csdn.net/sinat_23490433/article/details/78789362
-         *JSONArray jsonArray= JSONArray.
-        return ResponseEntity.ok(JSON.toJSON(employeeList));*/
+        JSONArray jsonArray= JSONArray.fromObject(employeeList);
+        return ResponseEntity.ok(jsonArray);
+    }
+
+    @CrossOrigin
+    @RequestMapping("api/addEmployee")
+    public ResponseEntity AddEmployeeInfo(@RequestBody Employee employee){
+        System.out.println(employee.toString());
+        if (employee == null){
+            return ResponseEntity.badRequest().build();
+        }
+        boolean result = employeeService.insertEmployee(employee);
+        if(!result){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin
+    @RequestMapping("api/employee")
+    public ResponseEntity getEmployeeInfoById(Integer id){
+        System.out.println("id："+id);
+        if(id == null){
+            return ResponseEntity.badRequest().build();
+        }
+        Employee employee = employeeService.queryEmployeeInfoById(id);
+        return ResponseEntity.ok(employee);
+    }
+
+    @CrossOrigin
+    @RequestMapping("api/deleteEmployee")
+    public ResponseEntity deleteEmployee(Integer id){
+        System.out.println("id："+id);
+        if(id == null){
+            return ResponseEntity.badRequest().build();
+        }
+        Boolean result = employeeService.deleteEmployeeById(id);
+        if(!result){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+
+    @CrossOrigin
+    @RequestMapping("api/editEmployee")
+    public ResponseEntity editEmployee(@RequestBody Employee employee){
+        System.out.println(employee.toString());
+        if(employee == null){
+            return ResponseEntity.badRequest().build();
+        }
+        Boolean result = employeeService.updateEmployeeById(employee);
+        if(!result){
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok().build();
     }
 }
